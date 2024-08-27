@@ -1,5 +1,6 @@
 package com.payment.api.services;
 
+import com.payment.api.entities.Transfer;
 import com.payment.api.entities.Wallet;
 import com.payment.api.repositories.WalletRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,12 +25,12 @@ public class WalletService {
     }
 
     public Wallet findById(Long id) throws Exception {
-        Wallet wallet = walletRepository.findById(id).get();
-        if(wallet == null){
+        Optional<Wallet> optionalWallet = walletRepository.findById(id);
+        if (optionalWallet.isEmpty()) {
             throw new Exception("User not found");
         }
 
-        return wallet;
+        return optionalWallet.get();
     }
 
     public List<Wallet> findAll(){

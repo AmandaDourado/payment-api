@@ -18,6 +18,8 @@ public class Wallet {
     private String email;
     private String password;
     private double balance;
+
+    @Enumerated(EnumType.STRING)
     private UserType userType;
 
     public Long getId() {
