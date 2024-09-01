@@ -20,6 +20,9 @@ public class TransferService {
     @Autowired
     private WalletService walletService;
 
+    @Autowired
+    private AuthorizeService authorizeService;
+
     public Transfer create(TransferDTO obj) throws Exception {
         if(obj.getValue() <= 0){
             throw new IllegalArgumentException("The value must be greater than zero");
@@ -42,6 +45,10 @@ public class TransferService {
 
         payer.setBalance(payer.getBalance() - obj.getValue());
         payee.setBalance(payee.getBalance() + obj.getValue());
+
+        if(!authorizeService.isAuthorized()) {
+            throw new IllegalArgumentException("Unauthorized transaction");
+        }
 
         Transfer transfer = new Transfer();
         transfer.setValue(obj.getValue());
