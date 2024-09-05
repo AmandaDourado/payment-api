@@ -1,4 +1,4 @@
-package com.payment.api.authorizer;
+package com.payment.api.dtos;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

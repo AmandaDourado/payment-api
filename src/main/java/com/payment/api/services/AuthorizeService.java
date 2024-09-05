@@ -1,7 +1,7 @@
 package com.payment.api.services;
 
-import com.payment.api.authorizer.AuthorizeDTO;
-import com.payment.api.authorizer.AuthorizerAPIQuery;
+import com.payment.api.dtos.AuthorizeDTO;
+import com.payment.api.integration.AuthorizerAPI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,10 +9,10 @@ import org.springframework.stereotype.Service;
 public class AuthorizeService {
 
     @Autowired
-    AuthorizerAPIQuery authorizerAPIQuery;
+    private AuthorizerAPI authorizerAPI;
 
     public boolean isAuthorized(){
-        AuthorizeDTO authorizeDTO = authorizerAPIQuery.authorizerQuery();
+        AuthorizeDTO authorizeDTO = authorizerAPI.authorizerQuery();
         return authorizeDTO.getData().isAuthorization();
     }
 }

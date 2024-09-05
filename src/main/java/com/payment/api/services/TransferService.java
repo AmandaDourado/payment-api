@@ -7,6 +7,7 @@ import com.payment.api.enums.UserType;
 import com.payment.api.repositories.TransferRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,6 +24,10 @@ public class TransferService {
     @Autowired
     private AuthorizeService authorizeService;
 
+    @Autowired
+    private NotifyService notifyService;
+
+    @Transactional
     public Transfer create(TransferDTO obj) throws Exception {
         if(obj.getValue() <= 0){
             throw new IllegalArgumentException("The value must be greater than zero");
@@ -54,6 +59,8 @@ public class TransferService {
         transfer.setValue(obj.getValue());
         transfer.setPayer(payer);
         transfer.setPayee(payee);
+
+        notifyService.notifyPayment();
 
         return transferRepository.save(transfer);
     }

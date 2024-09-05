@@ -1,19 +1,18 @@
-package com.payment.api.authorizer;
+package com.payment.api.integration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.coyote.Response;
+import com.payment.api.dtos.AuthorizeDTO;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
 
 @Component
-public class AuthorizerAPIQuery {
+public class AuthorizerAPI {
 
-    private String url = "https://util.devi.tools/api/v2/authorize";
+    private final String url = "https://util.devi.tools/api/v2/authorize";
 
     public AuthorizeDTO authorizerQuery() {
         RestTemplate restTemplate = new RestTemplate();
