@@ -17,18 +17,18 @@ public class WalletController {
     private WalletService walletService;
 
     @PostMapping()
-    public ResponseEntity create(@RequestBody Wallet wallet){
-        try{
-            Wallet obj =  walletService.create(wallet);
+    public ResponseEntity create(@RequestBody Wallet wallet) {
+        try {
+            Wallet obj = walletService.create(wallet);
             return new ResponseEntity<>("Wallet registered successfully! ID: " + obj.getId(), HttpStatus.CREATED);
-        } catch (Exception error){
+        } catch (Exception error) {
             return new ResponseEntity<>(error.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
     @GetMapping(value = "/{id}")
-    public Wallet findById(@PathVariable(value = "id") Long id) throws Exception {
-        return walletService.findById(id);
+    public ResponseEntity findById(@PathVariable(value = "id") Long id) throws Exception {
+        return new ResponseEntity<>(walletService.findById(id), HttpStatus.OK);
     }
 
     @GetMapping()

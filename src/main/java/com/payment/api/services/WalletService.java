@@ -1,7 +1,7 @@
 package com.payment.api.services;
 
-import com.payment.api.entities.Transfer;
 import com.payment.api.entities.Wallet;
+import com.payment.api.exceptions.UserNotFoundException;
 import com.payment.api.repositories.WalletRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +16,7 @@ public class WalletService {
     private WalletRepository walletRepository;
 
     public Wallet create(Wallet obj) {
-        Wallet wallet = walletRepository.findbyCpfCnpj(obj.getCpfCnpj());
+        Wallet wallet = walletRepository.findByCpfCnpj(obj.getCpfCnpj());
         if(wallet != null) {
             throw new IllegalArgumentException("There is already a registered user with this CPF/CNPJ!");
         }
@@ -27,7 +27,7 @@ public class WalletService {
     public Wallet findById(Long id) throws Exception {
         Optional<Wallet> optionalWallet = walletRepository.findById(id);
         if (optionalWallet.isEmpty()) {
-            throw new Exception("User not found");
+            throw new UserNotFoundException();
         }
 
         return optionalWallet.get();

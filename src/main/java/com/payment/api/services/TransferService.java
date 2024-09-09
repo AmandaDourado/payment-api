@@ -4,6 +4,8 @@ import com.payment.api.dtos.TransferDTO;
 import com.payment.api.entities.Transfer;
 import com.payment.api.entities.Wallet;
 import com.payment.api.enums.UserType;
+import com.payment.api.exceptions.TransferNotFoundException;
+import com.payment.api.exceptions.UnauthorizedTransactionException;
 import com.payment.api.repositories.TransferRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -52,7 +54,7 @@ public class TransferService {
         payee.setBalance(payee.getBalance() + obj.getValue());
 
         if(!authorizeService.isAuthorized()) {
-            throw new IllegalArgumentException("Unauthorized transaction");
+            throw new UnauthorizedTransactionException();
         }
 
         Transfer transfer = new Transfer();
@@ -68,14 +70,13 @@ public class TransferService {
     public Transfer findById(Long id) throws Exception {
         Optional<Transfer> optionalTransfer = transferRepository.findById(id);
         if (optionalTransfer.isEmpty()) {
-            throw new Exception("Transfer not found");
+            throw new TransferNotFoundException();
         }
 
         return optionalTransfer.get();
     }
 
     public List<Transfer> findAll(){
-        List<Transfer> listTranfer = transferRepository.findAll();
-        return listTranfer;
+        return transferRepository.findAll();
     }
 }

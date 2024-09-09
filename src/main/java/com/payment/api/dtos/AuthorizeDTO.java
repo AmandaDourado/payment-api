@@ -35,18 +35,18 @@ public class AuthorizeDTO {
     }
 }
 
-/*
-{
-  "status": "success",
-  "data": {
-    "authorization": true
-  }
-}
+    /*
+    {
+      "status": "success",
+      "data": {
+        "authorization": true
+      }
+    }
 
-{
-  "status": "fail",
-  "data": {
-    "authorization": false
-  }
-}
- */
+    {
+      "status": "fail",
+      "data": {
+        "authorization": false
+      }
+    }
+     */

@@ -18,18 +18,14 @@ public class TransferControler {
     private TransferService transferService;
 
     @PostMapping()
-    public ResponseEntity create(@RequestBody TransferDTO transfer){
-        try{
-            Transfer obj =  transferService.create(transfer);
-            return new ResponseEntity<>("Transfer successfully! ID: " + obj.getId(), HttpStatus.CREATED);
-        } catch (Exception error){
-            return new ResponseEntity<>(error.getMessage(), HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity create(@RequestBody TransferDTO transfer) throws Exception {
+        Transfer obj = transferService.create(transfer);
+        return new ResponseEntity<>("Transfer successfully! ID: " + obj.getId(), HttpStatus.CREATED);
     }
 
     @GetMapping(value = "/{id}")
-    public Transfer findById(@PathVariable(value = "id") Long id) throws Exception {
-        return transferService.findById(id);
+    public ResponseEntity findById(@PathVariable(value = "id") Long id) throws Exception {
+        return new ResponseEntity<>(transferService.findById(id), HttpStatus.OK);
     }
 
     @GetMapping()
